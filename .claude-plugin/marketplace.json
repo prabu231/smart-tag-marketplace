@@ -1,0 +1,14 @@
+{
+  "name": "smart-tag-marketplace",
+  "owner": {
+    "name": "Prabu Murugan",
+    "email": "prabu.murugan@bounteous.com"
+  },
+  "plugins": [
+    {
+      "name": "smart-tag",
+      "source": "./plugins/smart-tag",
+      "description": "AI Smart Tagging for AEM assets with per-asset author approval, taxonomy add requests, and an Excel audit report."
+    }
+  ]
+}

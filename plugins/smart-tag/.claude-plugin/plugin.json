@@ -1,0 +1,8 @@
+{
+  "name": "smart-tag",
+  "version": "1.0.0",
+  "description": "AI Smart Tagging for AEM assets with per-asset author approval, taxonomy add requests, and an Excel audit report.",
+  "author": {
+    "name": "Prabu Murugan"
+  }
+}
