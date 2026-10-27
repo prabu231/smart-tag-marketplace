@@ -58,6 +58,17 @@ approvals across assets.
 `dc:title`, `dc:description`, `dc:subject`, applied tags (`xcm:keywords`), and
 existing Smart Tags (`xcm:machineKeywords`).
 
+**Image fetch check.** Also try to fetch the asset's physical image (the binary
+or a web/thumbnail rendition) via the AEM read API. If it cannot be fetched
+(error, empty response, no renditions, permission denied), do NOT imply the
+image was viewed. Tell the author plainly: "I am not able to fetch the image
+for this asset," and give the **full URL including the AEM host**, built from
+the environment collected in Step 1 and the asset path:
+`https://<AEM host><asset path>` (e.g. `https://<AEM host>/content/dam/<folder>/<asset>.jpg`).
+Then base suggestions only on metadata (machine keywords, title, description,
+subject), label them "metadata-only (image not viewed)", and continue to 3b–3d
+with the author's approval as usual.
+
 **3b — Run AI Smart Tag logic.** Derive suggested tags from the asset's actual
 content (machine keywords, title, description, subject). Match each against the
 live taxonomy (`/content/cq:tags/<namespace>.N.json`) and classify:
@@ -104,7 +115,8 @@ suggestions, it never pre-applies or batches approvals.
 
 ### Step 4 — Running report + Excel export
 Maintain a running record across all processed assets with these columns:
-`Asset Name`, `Asset Path`, `Current Tags`, `Tags Applied`, `Tags Requested
+`Asset Name`, `Asset Path`, `Asset URL` (full URL including AEM host),
+`Image Fetched` (Yes/No), `Current Tags`, `Tags Applied`, `Tags Requested
 (missing)`, `Status`, `Timestamp`.
 
 At the end, write the record to an **Excel .xlsx** file in the workspace using
@@ -151,6 +163,9 @@ Once added, I will apply the tag(s) to the assets. Thank you.
   taxonomy admins only when no reasonably close existing tag can be found.
 - Missing tags are never applied — they are recorded as add requests.
 - Always show tag titles, never normalized tagNames.
+- If the physical image can't be fetched, say so explicitly, give the full
+  asset URL including the AEM host, and never present suggestions as based on
+  the image.
 - Confirm the environment and scope before any write.
 - Report failures honestly; verify each apply from the API response.
 - Always produce the final Excel report of applied vs. requested tags, even if
